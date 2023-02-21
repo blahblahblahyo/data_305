@@ -1,0 +1,329 @@
+---
+title: "DATA 305 - Winter 2023 Practice Midterm Exam One"
+output: html_notebook
+---
+
+**Friday, February 17, 2023**
+**8:00 am- 9:15 am**
+
+**Name: Enter your Name here:.................**
+
+
+**ID #: Enter your ID number here:.......................**
+
+
+**This is an open-minded, closed-book exam.** 
+
+-You will have a total of **75 minutes** to complete the midterm exam. No Time extension will be approved.
+
+-When you have completed the writing of the exam, please upload 2 following files as follows:
+
+1. the .pdf file with your completed answers to Gradescope for grading.
+
+2. the .rmd file with your completed answers to Dropbox in D2L.
+
+-Below each question or sub-question, insert an R "chunk" embedding the necessary code that computes your answer, if your answer requires a computation. Ensure you "run" such code.
+
+-Probability Laws of Compound Events
+
+$$
+\begin{aligned}
+&\text{The additon Law:      } P(A \cup B)= P(A)+P(B)-P(A \cap B)\\
+&\text{Law of Complement:    } P(A)+P(A^c)=1\\
+&\text{DeMorgan's Laws:      } P(A \cup B)^c= P(A^c \cap B^c), P(A \cap B)^c=P(A^c \cup B^c)\\
+&\text{Law of Total Probability:  } P(A)=P(A \cap B^c)+P(A \cap B), P(A)=\sum_{i=1}^kP(A|B_i)P(B_i)\\
+&\text{If A and B are independent events: } P(A \cap B)= P(A)*P(B)
+\end{aligned}
+$$
+
+
+-Useful Identities:
+
+$$
+\sum_{i=1}^{n}a_{i} = \frac{n(n + 1)}{2} \hspace{0.5in} \sum_{i=1}^{n}a^{2}_{i} = \frac{n(n + 1)(2n + 1)}{6} \hspace{0.5in} 
+\sum_{i = 0}^{\infty}a^{i} = \frac{1}{1 - a} \hspace{0.25in} {\rm for}\:\: |a| < 1 \hspace{0.5in} \sum_{i = 1}^{\infty}a^{i} = \frac{a}{1 - a} \hspace{0.25in} {\rm for}\:\: |a| < 1\hspace{0.5in} \sum_{i = 0}^{\infty}\frac{a^{x}}{x!} = e^{a}
+$$
+
+
+-Discrete Probability Distribution Function with Expectation and Standard Deviation.
+
+$$
+\begin{array}{c|c|c|c|}
+{\rm Distribution\:\:Name}          &   P(X = x)    &  E(X)     &   SD(X) \\
+\hline
+{\rm Bernoulli}                 & {\rm  p^{x}(1 - p)^{1 - x} , x = 0, 1} 
+& {\rm p}                      &      {\rm \sqrt{p(1-p)}}  \\
+{\rm Binomial}                  & {\rm  {n \choose x}p^{x}(1 - p)^{n - x} , x = 0, 1, 2, \cdots, n.}              
+& {\rm np}                      &      {\rm \sqrt{np(1-p)}}  \\
+{\rm Negative Binomial}         & {\rm {x  - 1 \choose k - 1}p^{k}(1 - p)^{x - k},x = k, k+1, k+2, \cdots}    
+& {\rm {\frac{k}{p}}}           &{\rm \sqrt{\frac{k(1-p)}{p^{2}}}}\\
+{\rm Geometric}                 & {\rm {(1 - p)^{x-1}p , x = 1, 2, 3, \cdots}}
+& {\rm \frac{1}{p}}             & {\rm \sqrt{\frac{(1-p)}{p^{2}}}} \\
+{\rm Hypergeometric}            & {\rm \frac{{r \choose x}{N - r \choose n - x }}{{N \choose n}},x = 0, 1, 2, \cdots, n. }             
+& {\rm \frac{nr}{N}}            & {\rm \sqrt{\left(\frac{nr}{N}\right)\left(\frac{N - r}{N}\right)\left(\frac{N - n}{N - 1}\right)}} \\
+{\rm Poisson}                   & {\rm \frac{e^{-\lambda}(\lambda)^{x}}{x!}, x = 0, 1, 2, 3, \cdots}                 & {\rm  \lambda}          & {\rm \sqrt{\lambda}} \\
+\end{array}
+$$
+
+
+
+-Built-In R Functions for Discrete Probability Distribution Models
+
+$$
+\begin{array}{c|c|c|c|}
+{\rm Distribution\:\:Name}    &    P(X = x)                        &   P(X \leq x)    \\
+\hline
+{\rm Binomial(n,p)}         &{\rm dbinom(x,n,p)}                         & {\rm pbinom(x,n,p)}         \\
+{\rm Negative Binomial}     & {\rm dnbinom(\text{#failure,#success},p)}  & {\rm pnbinom(\text{#failure,#success},p)} \\
+{\rm Geometric}        & {\rm dgeom(\text{#failure},p) }& {\rm pgeom(\text{#failure},p)} \\
+{\rm Hypergeometric}               & {\rm dhyper(x,r,N-r,n)}             &  {\rm phyper(x,r,N-r,n)} \\
+{\rm Poisson}          & {\rm dpois}(x, \lambda)             & {\rm ppois}(x, \lambda)   \\
+\end{array}
+$$
+
+
+
+
+**Example 1** a graph below represents a probability distribution function.
+```{r}
+x=c(0,1,2,3)
+probx=c(1/8,2/8,2/8,1/8)
+plot(x,probx, type = "h", col = "red", ylab = "P(X=x)", main = "......")
+```
+
+
+**Example 2** a log(x) function computes a natural logarithm (ln) in R. For example: ln (10) = 2.302585, use the command log(x) function below to calculate ln(10).
+
+```{r}
+log(10) #calculate ln(10)
+```
+
+
+
+-----------------------------------------------------------------
+
+
+## Question 1
+
+
+A recent poll[^1] conducted by Ipsos-Reid found that "6 in 10" millennial-Canadians (those born between 1983 and 2003), or 60%, indicate that their greatest financial challenge is to "purchase a home". 
+
+
+(a)	You randomly pick $n = 40$ millennial Canadians. Compute the probability that between 25 and 30, inclusive, indicate that the greatest financial challenge they are facing is being able to purchase a home.  
+
+
+
+**Answer:** Define the random variable $X$ as the number, out of 40, who indicated that the greatest financial challenge they are facing is being able to purchase a home, $X$ can be modeled by the Binomial distribution.
+
+
+
+$$
+P(25 \leq X \leq 30) = ?
+$$
+
+```{r}
+sum(dbinom(25:30, 40, 0.60))
+pbinom(30, 40, 0.60) - pbinom(24, 40, 0.60)
+```
+
+$$
+P(25 \leq X \leq 30) = \sum_{x = 25}^{30}{40 \choose x}(0.6)^{x}(0.40)^{40 - x} = 0.424676 \approx 0.4246
+$$
+
+(b)	Consider the random variable in part (a). Compute its expected value and the standard deviation. 
+
+
+
+
+**Answer:** 
+$$
+E(X) = np  = 40*(0.60) = 24 \hspace{0.5in} SD(X) = \sigma_{X} = \sqrt{E(X)*(1-p)} = \sqrt{24(0.4)} = \sqrt{9.6} = 3.0983 \approx 3.10
+$$
+
+
+(c) If you are to sample until you find the 10th millennial-Canadian who indicates the greatest financial challenge they face is purchasing a home. Compute the probability that your sample size is between 14 and 20. 
+
+
+
+**Answer:** Define $Y$ as the number needed to be sampled in order to find the 10th who has this attribute. $Y$ can be modeled by the Negative Binomial distribution, where
+$$
+P(Y = y) = {y - 1 \choose 10 - 1}(0.60)^{10}(0.40)^{y - 10} \hspace{0.5in} y = 10, 11, 12, \cdots
+$$
+
+
+To compute $P(14 \leq Y \leq 20)$,
+$$
+P(14 \leq Y \leq 20)={13 \choose 9}(0.60)^{10}(0.40)^4 + {14 \choose 9}(0.60)^{10}(0.40)^5 + \cdots + {19 \choose 9}(0.60)^{10}(0.40)^10 = 0.7038991 \approx 0.7039
+$$
+
+this can be computed with
+
+```{r}
+sum(dnbinom(4:10, 10, 0.60))
+```
+
+Alternatively, you can compute
+$$
+P(14 \leq Y \leq 20) = P(Y \leq 20)-P(Y \leq 13)
+$$
+
+```{r}
+pnbinom(10, 10, 0.60) - pnbinom(3,10,0.60)
+```
+
+------------------------------------------------------------
+
+## Question 2
+
+A Student is trying to calculate their final grade. The student estimates the their performance on the following table.
+
+$$
+\begin{array}{lccr}
+\text{Category}          &    \text{Mark outof 100}     &   \text{Proportion of Grade}   \\
+        Assignment       &         28                   &  0.1                 \\
+          Quizzes        &         58.5                 &  ...k.......        \\
+          Midterms       &         31                   &  0.3                  \\
+          Final          &         77                   &  0.5
+\end{array}
+$$
+
+(a)  What is the expected grade out of 100?
+
+
+proportion of the grades should = 1 so k + 0.1 + 0.3 + 0.5 = 1
+
+k + 0.4 + 0.5 = 1
+
+k = 1 - 0.9 = 0.1
+
+28 * 0.1 + 58.5 * 0.1 + 31 * 0.3 + 77 * 0.5 
+
+```{r}
+var = 28 * 0.1 + 58.5 * 0.1 + 31 * 0.3 + 77 * 0.5 
+var
+```
+
+
+
+
+
+
+**Answer:** 
+$$
+\begin{aligned}
+\text{E(Grade)}&=28(0.1)+58.5(0.1)+31(0.3)+77(0.5)\\
+&=56.45\text{  points}
+\end{aligned}
+$$
+```{r}
+28*(0.1)+58.5*(0.1)+31*(0.3)+77*(0.5)
+```
+(b)  What is the standard deviation of expected grade?
+
+$$
+\begin{aligned}
+\text{E(Grade)}^2&=28^2(0.1)+58.5^2(0.1)+31^2(0.3)+77^2(0.5)\\
+&=3673.425
+\end{aligned}
+$$
+```{r}
+28^2*(0.1)+58.5^2*(0.1)+31^2*(0.3)+77^2*(0.5)
+```
+
+$$
+\begin{aligned}
+\text{Var(Grade)}=3673.425-56.45^2=486.8225
+\end{aligned}
+$$
+```{r}
+(28^2*(0.1)+58.5^2*(0.1)+31^2*(0.3)+77^2*(0.5))-56.45^2
+```
+
+
+$$
+\begin{aligned}
+\text{SD(Grade)}=\sqrt{486.8225}=22.06405 \text{    points}
+\end{aligned}
+$$
+
+```{r}
+sqrt(486.8225)
+```
+(c)  If a student expects to earn an additional \$ 19.5 per year for each % point they scored on their final grade, and there was a \$ 300 scholarship and a cost of $ 800 for tuition. What is the expected profit from this course in their first year of work?
+
+$$
+\begin{aligned}
+\text{Profit}&=19.5Grade+300-800\\
+\text{E(Profit)}&=E(19.5Grade+300-800)\\
+&=19.5E(Grade)-E(500)\\
+&=19.5*56.45-500=600.775 \text{   dollars}
+\end{aligned}
+$$
+```{r}
+19.5*56.45-500
+```
+--------------------------------------------------------------
+
+## Question 3
+A Persian rug importer receives a large shipment of 7' by 12' rugs. A sampling of the rugs receives revealed the shipment contain too many imperfections to sell at full price. Specifically, it has been determined that the number of imperfections per rug follows a Poisson distribution with an average of 2.8 imperfections.
+
+A customer randomly selects a rug. What is the probability that this rug has:
+
+(a) No imperfections? 
+
+**Answer:** 
+
+Define X be the number of imperfections per rug. Find P(X=0)
+
+P(X=0)=0.06081006
+
+```{r}
+dpois(0,2.8)
+```
+(b) At least one imperfection? 
+
+Find $P(X \geq 1)=1-P(X=0)$ =?
+
+$P(X \geq 1)=1-P(X=0)$ =0.9391899
+
+```{r}
+1-dpois(0,2.8)
+```
+(c) Think back to conditional probability, if the rug has at most three imperfections, what is the probability it will have exactly one imperfection?
+
+
+Find $P(X=1|X \leq 3)$ =?
+
+$$
+\begin{aligned}
+P(X=1|X \leq 3)&=\frac{P(X=1 \cap X \leq 3)}{P(X \leq 3)}\\
+&=\frac{P(X=1)}{P(X \leq 3)}\\\\
+&=\frac{0.1702682}{0.6919374}=0.2460745\\
+\end{aligned}
+$$
+```{r}
+a=dpois(1,2.8)
+a
+b=sum(dpois(0:3,2.8))
+b
+a/b
+```
+(d) Use RStudio to visualize the probability distribution function of the number of imperfections per rug. Provide the output and summarize the shape of the distribution.
+
+```{r}
+probx=function(x){
+  (exp(-2.8)*(2.8^x))/factorial(x)
+}
+x=0:15
+plot(x,probx(x),type = "h", col = "red", ylab = "P(X=x)", main = "the probability distribution function of the number of imperfections per rug")
+abline(v=2.8,col="purple")
+```
+```{r}
+sqrt(2.8)
+```
+
+
+The shape of this distribution is **right skewed distributed** with **the mean = 2.8 imperfections** and **the sd =1.67332 imperfections**
+
+
+------------------------------------------------------------
